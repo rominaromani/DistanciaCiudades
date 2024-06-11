@@ -84,12 +84,53 @@ def obtener_distancia(ciudad1, pais1, ciudad2, pais2, metodo='csv'):
         print("No se pudieron obtener las coordenadas de una o ambas ciudades.")
         return None
 
+
+def CiudadesMasCercanas (ciudad1, pais1, ciudad2, pais2,ciudad3, pais3, metodo='csv'):
+    if metodo == 'csv':
+        coord1 = obtenerCoordenadasCSV(ciudad1, pais1)
+        coord2 = obtenerCoordenadasCSV(ciudad2, pais2)
+        coord3 = obtenerCoordenadasCSV(ciudad3, pais3)
+    elif metodo == 'api':
+        coord1 = obtenerCoordenadasAPI(ciudad1, pais1)
+        coord2 = obtenerCoordenadasAPI(ciudad2, pais2)
+        coord3 = obtenerCoordenadasCSV(ciudad3, pais3)
+    elif metodo == 'mock':
+        coord1 = obtenerCoordenadasMOCK(ciudad1, pais1)
+        coord2 = obtenerCoordenadasMOCK(ciudad2, pais2)
+        coord3 = obtenerCoordenadasCSV(ciudad3, pais3)
+    else:
+        raise ValueError("Método no soportado.")
+
+    if coord1 and coord2 and coord3:
+        coord1_2=distanciaHaversine(coord1, coord2)
+        coord1_3=distanciaHaversine(coord1, coord3)
+        coord2_3=distanciaHaversine(coord2, coord3)
+        if coord1_2<coord1_3 and coord1_2<coord2_3:
+            menor_distancia=coord1_2
+            ciudades_con_menor_distancia=ciudad1+ " con "+ciudad2+ "tienen la mínima distancia de "+ str(menor_distancia)
+
+            return ciudades_con_menor_distancia
+        elif coord1_3<coord1_2 and coord1_3<coord2_3:
+            menor_distancia=coord1_3
+            ciudades_con_menor_distancia=ciudad1+" con "+ciudad3 + "tienen la mínima distancia de "+ str(menor_distancia)
+            
+            return ciudades_con_menor_distancia
+        else:
+            menor_distancia=coord2_3
+            ciudades_con_menor_distancia=ciudad2+" con "+ciudad3 +"tienen la mínima distancia de "+ str(menor_distancia)
+            return ciudades_con_menor_distancia
+    else:
+        print("No se pudieron obtener las coordenadas de una o ambas ciudades.")
+        return None
+
 ciudad1 = 'Lima'
 pais1 = 'Peru'
 ciudad2 = 'Bogota'
 pais2 = 'Colombia'
+ciudad3='Buenos Aires'
+pais3='Argentina'
 
-distancia1 = obtener_distancia(ciudad1, pais1, ciudad2, pais2, metodo='csv')
+distancia2 = CiudadesMasCercanas (ciudad1, pais1, ciudad2, pais2,ciudad3, pais3, metodo='csv')
 
-if distancia1 is not None:
-    print(f"La distancia entre {ciudad1} y {ciudad2} es de {distancia1:.2f} km.")
+if distancia2 is not None:
+    print(distancia2)
