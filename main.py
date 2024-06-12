@@ -116,21 +116,13 @@ def CiudadesMasCercanas (ciudad1, pais1, ciudad2, pais2,ciudad3, pais3, metodo='
         print("No se pudieron obtener las coordenadas de una o ambas ciudades.")
         return None
 
-ciudad1 = 'Lima'
-pais1 = 'Peru'
-ciudad2 = 'Bogota'
-pais2 = 'Colombia'
-ciudad3='Buenos Aires'
-pais3='Argentina'
+
 def test_Conection():
     ConnectionError = False
     if(ConnectionError):
         raise ConnectionError("Prueba de conexión falló: Error de conexión")
 
-distancia2 = CiudadesMasCercanas (ciudad1, pais1, ciudad2, pais2,ciudad3, pais3, metodo='csv')
 
-if distancia2 is not None:
-    print(distancia2)
 def testData(ciudad1, pais1, ciudad2, pais2, ciudad3, pais3, metodo):
     if (metodo=="csv"):
         ciudad1_exits=obtenerCoordenadasCSV(ciudad1, pais1)
@@ -145,15 +137,20 @@ def testData(ciudad1, pais1, ciudad2, pais2, ciudad3, pais3, metodo):
         ciudad1_exits=obtenerCoordenadasMOCK(ciudad1, pais1)
         ciudad2_exits=obtenerCoordenadasMOCK(ciudad2, pais2)
         ciudad3_exits=obtenerCoordenadasMOCK(ciudad3, pais3)
-
+    
+    value_return=True
     if(ciudad1_exits is None):
         raise ValueError("No se encontró la ciudad 1/pais 1")
+        value_return=False
 
     if(ciudad2_exits is None):
         raise ValueError("No se encontró la ciudad 2/pais2")
+        value_return=False
     if(ciudad3_exits is None):
         raise ValueError("No se encontró la ciudad 3/pais 3")
-    else:
+        value_return=False
+    
+    if (value_return!=False):
         return True
     #En obtenerCoordenadas mandamos un mensaje de error en el caso que la data no exista u ocurra un error
 
