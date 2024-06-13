@@ -78,8 +78,8 @@ def obtener_distancia(ciudad1, pais1, ciudad2, pais2, metodo='csv'):
         return None
 def CiudadesMasCercanas (ciudad1, pais1, ciudad2, pais2,ciudad3, pais3, metodo='csv'):
 
-    if pais1==pais2 or pais1==pais3 or pais2==pais3:
-        return ciudad1 +" con "+ciudad2 + "tienen la mínima distancia de 0"
+    if ciudad1 == ciudad2 or ciudad1 == ciudad3 or ciudad2 == ciudad3:
+        return ciudad1 + " con " + ciudad2 + " tienen la mínima distancia de 0"
 
     if metodo == 'csv':
         coord1 = obtenerCoordenadasCSV(ciudad1, pais1)
